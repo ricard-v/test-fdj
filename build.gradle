@@ -19,6 +19,7 @@ project.ext {
 
 ext {
     core_ktx_version = '1.9.0'
+    coroutines_version = '1.6.4'
     junit_version = '4.13.2'
     hilt_version = '2.43.2'
     okhttp_version = '4.10.0'
