@@ -6,6 +6,7 @@ interface HomePageContract {
     interface View {
         fun showLoading(isLoading: Boolean)
         fun showSearchResults(results: List<FootballTeamEntity>)
+        fun showNoResultsFound(show: Boolean, searchKey: String)
         fun showErrorMessage(errorMessage: String)
     }
 

@@ -15,6 +15,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomePagePresenterTests :
     BasePresenterTests<HomePageModel, HomePageContract.View, HomePagePresenter>() {
+
     override val mockedModel: HomePageModel = mockk()
     override val mockedView: HomePageContract.View = mockk()
     override val presenter: HomePagePresenter = HomePagePresenter(
@@ -22,7 +23,6 @@ class HomePagePresenterTests :
         mainDispatcher = Dispatchers.Main, // Main Dispatcher is handled in BasePresenterTests
         homePageModel = mockedModel,
     )
-
 
     @Test
     fun `When Model returns a successful result for getFootballTeamsFromChampionShip()`() =
@@ -41,6 +41,7 @@ class HomePagePresenterTests :
                 Result.success(tTeams)
             }
             every { mockedView.showLoading(any()) } just Runs
+            every { mockedView.showNoResultsFound(any(), any()) } just Runs
             every { mockedView.showSearchResults(results = tTeams) } just Runs
 
             // act
@@ -51,18 +52,101 @@ class HomePagePresenterTests :
             coVerify(exactly = 1) {
                 mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
             }
+
+            verify(exactly = 1) {
+                mockedView.showLoading(
+                    withArg {
+                        val isLoading = actual as Boolean
+                        assert(isLoading)
+                    }
+                )
+            }
+
+            verify(exactly = 1) {
+                mockedView.showLoading(
+                    withArg {
+                        val isLoading = actual as Boolean
+                        assert(!isLoading)
+                    }
+                )
+            }
+
+            verify(exactly = 2) {
+                mockedView.showNoResultsFound(
+                    withArg {
+                        val show = actual as Boolean
+                        assert(!show)
+                    },
+                    withArg {
+                        val searchKey = actual as String
+                        assert(searchKey == "")
+                    },
+                )
+            }
+
+            verify(exactly = 1) {
+                mockedView.showSearchResults(
+                    withArg {
+                        @Suppress("UNCHECKED_CAST")
+                        val result = (actual as List<FootballTeamEntity>)
+                        assert(result == tTeams)
+                    }
+                )
+            }
+        }
+
+    @Test
+    fun `When Model finds no results for getFootballTeamsFromChampionShip()`() =
+        testScope.runTest {
+            // arrange
+            val tSearchKey = "This league does not exist!"
+            val tTeams = emptyList<FootballTeamEntity>()
+
+            coEvery {
+                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
+            } answers {
+                Result.success(tTeams)
+            }
+            every { mockedView.showLoading(any()) } just Runs
+            every { mockedView.showNoResultsFound(any(), any()) } just Runs
+            every { mockedView.showSearchResults(results = tTeams) } just Runs
+
+            // act
+            presenter.searchChampionship(tSearchKey)
+            advanceUntilIdle()
+
+            // assert
+            coVerify(exactly = 1) {
+                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
+            }
+
             verify(exactly = 1) {
                 mockedView.showLoading(withArg {
                     val isLoading = actual as Boolean
                     assert(isLoading)
                 })
             }
+
             verify(exactly = 1) {
                 mockedView.showLoading(withArg {
                     val isLoading = actual as Boolean
                     assert(!isLoading)
                 })
             }
+
+            verify(exactly = 1) {
+                mockedView.showNoResultsFound(
+                    withArg {
+                        val show = actual as Boolean
+                        assert(show)
+                    },
+                    withArg {
+                        val searchKey = actual as String
+                        assert(searchKey == tSearchKey)
+                    },
+                )
+            }
+
             verify(exactly = 1) {
                 mockedView.showSearchResults(
                     withArg {
@@ -88,6 +172,7 @@ class HomePagePresenterTests :
             }
             every { mockedView.showLoading(any()) } just Runs
             every { mockedView.showSearchResults(emptyList()) } just Runs
+            every { mockedView.showNoResultsFound(any(), any()) } just Runs
             every { mockedView.showErrorMessage(any()) } just Runs
 
             // act
@@ -98,6 +183,7 @@ class HomePagePresenterTests :
             coVerify(exactly = 1) {
                 mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
             }
+
             verify(exactly = 1) {
                 mockedView.showSearchResults(
                     withArg {
@@ -107,6 +193,7 @@ class HomePagePresenterTests :
                     }
                 )
             }
+
             verify(exactly = 1) {
                 mockedView.showErrorMessage(withArg {
                     val result = (actual as String)

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.mackosoft.core.base.presenter.BasePresenterFragment
 import com.mackosoft.feature.homepage.HomePageContract
@@ -91,6 +92,11 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
 
     override fun showSearchResults(results: List<FootballTeamEntity>) {
         footballTeamsListAdapter.submitList(results)
+    }
+
+    override fun showNoResultsFound(show: Boolean, searchKey: String) {
+        binding.noSearchResultsLabel.text = getString(R.string.no_search_results_for, searchKey)
+        binding.noSearchResultsLabel.isVisible = show
     }
 
     override fun showErrorMessage(errorMessage: String) {

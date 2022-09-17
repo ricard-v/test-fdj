@@ -29,11 +29,18 @@ class HomePagePresenter @Inject constructor(
         currentSearchJob = launch {
             delay(DEBOUNCE_THRESHOLD_MS)
             view.get()?.showLoading(isLoading = true)
+            view.get()?.showNoResultsFound(show = false, searchKey = "")
+
             val result = model.getFootballTeamsFromChampionShip(championShip = searchKey)
             result.fold(
                 onSuccess = { teams ->
                     view.get()?.showLoading(isLoading = false)
                     view.get()?.showSearchResults(results = teams)
+                    if (teams.isEmpty()) {
+                        view.get()?.showNoResultsFound(show = true, searchKey = searchKey)
+                    } else {
+                        view.get()?.showNoResultsFound(show = false, searchKey = "")
+                    }
                 },
                 onFailure = { error ->
                     view.get()?.showLoading(isLoading = false)
