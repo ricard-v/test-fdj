@@ -40,7 +40,55 @@ class HomePagePresenterTests :
             } answers {
                 Result.success(tTeams)
             }
+            every { mockedView.showLoading(any()) } just Runs
             every { mockedView.showSearchResults(results = tTeams) } just Runs
+
+            // act
+            presenter.searchChampionship(tSearchKey)
+            advanceUntilIdle()
+
+            // assert
+            coVerify(exactly = 1) {
+                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
+            }
+            verify(exactly = 1) {
+                mockedView.showLoading(withArg {
+                    val isLoading = actual as Boolean
+                    assert(isLoading)
+                })
+            }
+            verify(exactly = 1) {
+                mockedView.showLoading(withArg {
+                    val isLoading = actual as Boolean
+                    assert(!isLoading)
+                })
+            }
+            verify(exactly = 1) {
+                mockedView.showSearchResults(
+                    withArg {
+                        @Suppress("UNCHECKED_CAST")
+                        val result = (actual as List<FootballTeamEntity>)
+                        assert(result == tTeams)
+                    }
+                )
+            }
+        }
+
+    @Test
+    fun `When Model returns an unsuccessful result for getFootballTeamsFromChampionShip()`() =
+        testScope.runTest {
+            // arrange
+            val tSearchKey = "This league does not exist!"
+            val tException = Exception("League not found")
+
+            coEvery {
+                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
+            } answers {
+                Result.failure(tException)
+            }
+            every { mockedView.showLoading(any()) } just Runs
+            every { mockedView.showSearchResults(emptyList()) } just Runs
+            every { mockedView.showErrorMessage(any()) } just Runs
 
             // act
             presenter.searchChampionship(tSearchKey)
@@ -55,33 +103,9 @@ class HomePagePresenterTests :
                     withArg {
                         @Suppress("UNCHECKED_CAST")
                         val result = (actual as List<FootballTeamEntity>)
-                        assert(result == tTeams)
+                        assert(result.isEmpty())
                     }
                 )
-            }
-        }
-
-    @Test
-    fun `When Model returns an unsuccessful result for getFootballTeamsFromChampionShip()` () =
-        testScope.runTest {
-            // arrange
-            val tSearchKey = "This league does not exist!"
-            val tException = Exception("League not found")
-
-            coEvery {
-                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
-            } answers {
-                Result.failure(tException)
-            }
-            every { mockedView.showErrorMessage(any()) } just Runs
-
-            // act
-            presenter.searchChampionship(tSearchKey)
-            advanceUntilIdle()
-
-            // assert
-            coVerify(exactly = 1) {
-                mockedModel.getFootballTeamsFromChampionShip(championShip = tSearchKey)
             }
             verify(exactly = 1) {
                 mockedView.showErrorMessage(withArg {

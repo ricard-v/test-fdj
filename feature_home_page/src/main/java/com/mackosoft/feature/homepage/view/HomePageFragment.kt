@@ -82,6 +82,13 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
     }
 
     // region Contract
+    override fun showLoading(isLoading: Boolean) {
+        if (isLoading)
+            binding.loader.show()
+        else
+            binding.loader.hide()
+    }
+
     override fun showSearchResults(results: List<FootballTeamEntity>) {
         footballTeamsListAdapter.submitList(results)
     }

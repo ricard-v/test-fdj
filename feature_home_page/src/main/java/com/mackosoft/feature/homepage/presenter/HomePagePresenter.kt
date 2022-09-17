@@ -28,12 +28,16 @@ class HomePagePresenter @Inject constructor(
         currentSearchJob?.cancel()
         currentSearchJob = launch {
             delay(DEBOUNCE_THRESHOLD_MS)
+            view.get()?.showLoading(isLoading = true)
             val result = model.getFootballTeamsFromChampionShip(championShip = searchKey)
             result.fold(
                 onSuccess = { teams ->
+                    view.get()?.showLoading(isLoading = false)
                     view.get()?.showSearchResults(results = teams)
                 },
                 onFailure = { error ->
+                    view.get()?.showLoading(isLoading = false)
+                    view.get()?.showSearchResults(results = emptyList())
                     view.get()?.showErrorMessage(
                         errorMessage = error.localizedMessage ?: "unknown error",
                     )

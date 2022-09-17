@@ -4,6 +4,7 @@ import com.mackosoft.feature.homepage.model.entities.FootballTeamEntity
 
 interface HomePageContract {
     interface View {
+        fun showLoading(isLoading: Boolean)
         fun showSearchResults(results: List<FootballTeamEntity>)
         fun showErrorMessage(errorMessage: String)
     }
