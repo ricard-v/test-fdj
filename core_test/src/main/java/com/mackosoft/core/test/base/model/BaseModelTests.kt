@@ -12,14 +12,23 @@ abstract class BaseModelTests<RemoteDataSource : BaseRemoteDataSource, Model : B
     BaseTests() {
 
     protected abstract val mockedRemoteDatasource: RemoteDataSource
-    protected abstract val mockedModel: Model
+    protected abstract val model: Model
 
     /**
-     * To be used when instantiating the [mockedModel] which
+     * To be used when instantiating the [model] which
      * requires an IO [CoroutineDispatcher].
      */
     protected val ioDispatcher = StandardTestDispatcher(
         scheduler = testScope.testScheduler,
         name = "IO Dispatcher",
+    )
+
+    /**
+     * To be used when instantiating the [model] which
+     * requires a Default [CoroutineDispatcher].
+     */
+    protected val defaultDispatcher = StandardTestDispatcher(
+        scheduler = testScope.testScheduler,
+        name = "Default Dispatcher",
     )
 }
