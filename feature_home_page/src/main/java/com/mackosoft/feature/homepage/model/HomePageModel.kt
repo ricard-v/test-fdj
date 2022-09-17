@@ -6,11 +6,11 @@ import com.mackosoft.core.dispatchers.DefaultDispatcher
 import com.mackosoft.core.dispatchers.IoDispatcher
 import com.mackosoft.feature.homepage.HomePageContract
 import com.mackosoft.feature.homepage.datasource.HomePageRemoteDataSource
+import com.mackosoft.feature.homepage.datasource.data.FootballChampionsShips
 import com.mackosoft.feature.homepage.datasource.data.FootballChampionshipData
-import com.mackosoft.feature.homepage.datasource.data.FootballTeamData
+import com.mackosoft.feature.homepage.datasource.data.FootballTeams
 import com.mackosoft.feature.homepage.model.entities.FootballTeamEntity
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -28,36 +28,36 @@ class HomePageModel @Inject constructor(
     override suspend fun getFootballTeamsFromChampionShip(
         championShip: String
     ): Result<List<FootballTeamEntity>> {
-        val availableChampionShips: Result<List<FootballChampionshipData>> =
+        val availableChampionShipsResult: Result<FootballChampionsShips> =
             withContext(ioDispatcher) {
                 remoteDataSource.getAllChampionsShips()
             }
 
-        availableChampionShips.onFailure {
+        availableChampionShipsResult.onFailure {
             return Result.failure(it)
         }
 
         val matchingChampionShip: FootballChampionshipData = withContext(defaultDispatcher) {
-            availableChampionShips.getOrDefault(emptyList()).find { it.name.contains(championShip) }
+            availableChampionShipsResult.getOrNull()?.leagues?.find { it.name.contains(championShip) }
         } ?: run {
             Log.e(
                 TAG,
-                "Could not find corresponding championship with name <$championShip> in $availableChampionShips."
+                "Could not find corresponding championship with name <$championShip> in $availableChampionShipsResult."
             )
             return Result.success(emptyList())
         }
 
-        val footballTeams: Result<List<FootballTeamData>> = withContext(ioDispatcher) {
+        val championShipTeamsResult: Result<FootballTeams> = withContext(ioDispatcher) {
             remoteDataSource.getFootballTeamsFromChampionShip(
                 championShip = matchingChampionShip.name
             )
         }
 
-        return footballTeams.fold(
-            onSuccess = { teams ->
+        return championShipTeamsResult.fold(
+            onSuccess = { championShipTeams ->
                 Result.success(
                     withContext(defaultDispatcher) {
-                        teams.map { data ->
+                        championShipTeams.teams.map { data ->
                             FootballTeamEntity(
                                 id = data.idTeam,
                                 teamBadgeUrl = data.strTeamBadge,
