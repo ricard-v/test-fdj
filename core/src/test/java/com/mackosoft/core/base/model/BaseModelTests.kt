@@ -1,7 +1,7 @@
 package com.mackosoft.core.base.model
 
 import com.mackosoft.core.base.BaseTests
-import com.mackosoft.core.base.network.BaseRemoteDataSource
+import com.mackosoft.core.base.datasource.BaseRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

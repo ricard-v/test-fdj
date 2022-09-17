@@ -1,16 +1,20 @@
 package com.mackosoft.core.base.presenter
 
+import com.mackosoft.core.base.model.BaseModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-open class BaseCoroutinePresenter @Inject constructor(
-    protected val defaultDispatcher: CoroutineDispatcher,
-    protected val mainDispatcher: CoroutineDispatcher,
+abstract class BaseCoroutinePresenter<Model: BaseModel<*>, View>(
+    private val mainDispatcher: CoroutineDispatcher,
+    protected val model: Model,
+    protected val view: WeakReference<View>,
 ) : CoroutineScope {
+
     private var job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
