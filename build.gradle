@@ -27,4 +27,5 @@ ext {
     mockk_version = '1.12.8'
     okhttp_version = '4.10.0'
     retrofit_version = '2.9.0'
+    viewbinding_delegate_version = '1.5.6'
 }

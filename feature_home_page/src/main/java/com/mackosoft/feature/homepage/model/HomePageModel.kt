@@ -38,7 +38,12 @@ class HomePageModel @Inject constructor(
         }
 
         val matchingChampionShip: FootballChampionshipData = withContext(defaultDispatcher) {
-            availableChampionShipsResult.getOrNull()?.leagues?.find { it.name.contains(championShip) }
+            availableChampionShipsResult.getOrNull()?.leagues?.find {
+                it.name.contains(
+                    championShip,
+                    ignoreCase = true,
+                )
+            }
         } ?: run {
             Log.e(
                 TAG,

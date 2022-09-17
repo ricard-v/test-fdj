@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/vrinc/Documents/Others/TestFDJ/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/vrinc/Documents/Others/TestFDJ/feature_home_page/src/main/res/drawable/ic_search.xml" value="0.1965" />
         <entry key="..\:/Users/vrinc/Documents/Others/TestFDJ/feature_home_page/src/main/res/layout/fragment_home_page.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/vrinc/Documents/Others/TestFDJ/feature_home_page/src/main/res/menu/home_page_fragment_menu.xml" value="0.365625" />
       </map>
     </option>
   </component>

@@ -132,6 +132,63 @@ class HomePageModelTests : BaseModelTests<HomePageRemoteDataSource, HomePageMode
             }
         }
 
+    @Test
+    fun `When HomePageRemoteDataSource returns successful answers and is case insensitive`() =
+        testScope.runTest {
+            // arrange
+            val tPartialChampionShipName = "LiGUe 1"
+
+            val tChampionShips = FootballChampionsShips(
+                leagues = listOf(
+                    FootballChampionshipData(id = "1", name = "French Ligue 1"),
+                    FootballChampionshipData(id = "2", name = "English Premier League"),
+                    FootballChampionshipData(id = "3", name = "Italian Serie A"),
+                )
+            )
+            coEvery {
+                mockedRemoteDatasource.getAllChampionsShips()
+            } answers {
+                Result.success(tChampionShips)
+            }
+
+            val tLeague = tChampionShips.leagues.first()
+            val tFootballTeams = FootballTeams(
+                teams = listOf(
+                    FootballTeamData(idTeam = "1", strTeamBadge = "url/to/image1.png"),
+                    FootballTeamData(idTeam = "2", strTeamBadge = "url/to/image2.png"),
+                    FootballTeamData(idTeam = "3", strTeamBadge = "url/to/image3.png"),
+                )
+            )
+            coEvery {
+                mockedRemoteDatasource.getFootballTeamsFromChampionShip(
+                    championShip = tLeague.name,
+                )
+            } answers {
+                Result.success(tFootballTeams)
+            }
+
+            // act
+            val result = model.getFootballTeamsFromChampionShip(
+                championShip = tPartialChampionShipName,
+            )
+            advanceUntilIdle()
+
+            // assert
+            assertResultIsSuccess(expected = tFootballTeams, actual = result)
+
+            coVerify(exactly = 1) {
+                mockedRemoteDatasource.getAllChampionsShips()
+            }
+            coVerify(exactly = 1) {
+                mockedRemoteDatasource.getFootballTeamsFromChampionShip(
+                    withArg {
+                        val name = actual as String
+                        assert(name == tLeague.name)
+                    }
+                )
+            }
+        }
+
 
     @Test
     fun `When HomePageRemoteDataSource failed to return all championships`() = testScope.runTest {

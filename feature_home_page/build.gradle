@@ -24,6 +24,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,6 +67,9 @@ dependencies {
     implementation project(path: ':network')
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Misc
+    implementation "com.github.kirich1409:viewbindingpropertydelegate:$viewbinding_delegate_version"
 
     // Tests > Unit
     testImplementation project(path: ':core_test')
