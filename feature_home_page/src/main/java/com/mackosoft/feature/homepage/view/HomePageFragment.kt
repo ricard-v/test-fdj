@@ -16,6 +16,8 @@ import com.mackosoft.feature.homepage.R
 import com.mackosoft.feature.homepage.databinding.FragmentHomePageBinding
 import com.mackosoft.feature.homepage.model.entities.FootballTeamEntity
 import com.mackosoft.feature.homepage.presenter.HomePagePresenter
+import com.mackosoft.feature.homepage.view.adapter.FootballTeamsListAdapter
+import com.mackosoft.feature.homepage.view.adapter.FootballTeamsListDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,6 +29,8 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
     override lateinit var presenter: HomePagePresenter
     private val binding: FragmentHomePageBinding by viewBinding()
     private var searchView: SearchView? = null
+
+    private val footballTeamsListAdapter: FootballTeamsListAdapter = FootballTeamsListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,6 +44,7 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
 
     private fun setupUi() {
         setupMenu()
+        setupTeamsList()
     }
 
     private fun setupMenu() {
@@ -68,10 +73,17 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
         )
     }
 
+    private fun setupTeamsList() {
+        binding.teams.apply {
+            setHasFixedSize(true)
+            adapter = footballTeamsListAdapter
+            addItemDecoration(FootballTeamsListDecoration(requireContext()))
+        }
+    }
+
     // region Contract
     override fun showSearchResults(results: List<FootballTeamEntity>) {
-        // TODO
-        Toast.makeText(requireContext(), "got ${results.size} teams!", Toast.LENGTH_LONG).show()
+        footballTeamsListAdapter.submitList(results)
     }
 
     override fun showErrorMessage(errorMessage: String) {

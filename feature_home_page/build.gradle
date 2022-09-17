@@ -70,6 +70,7 @@ dependencies {
 
     // Misc
     implementation "com.github.kirich1409:viewbindingpropertydelegate:$viewbinding_delegate_version"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
 
     // Tests > Unit
     testImplementation project(path: ':core_test')

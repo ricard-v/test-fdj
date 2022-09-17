@@ -13,7 +13,7 @@ object RetrofitClient {
     @VisibleForTesting
     val apiBaseUrl = "https://www.thesportsdb.com/api/v1/json/"
 
-    private val globalOkHttpClient by lazy {
+    val globalOkHttpClient by lazy {
         okHttpClient {
             interceptors = listOf(
                 HttpLoggingInterceptor().apply {
