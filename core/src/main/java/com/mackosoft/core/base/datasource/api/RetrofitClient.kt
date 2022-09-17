@@ -1,9 +1,9 @@
 package com.mackosoft.core.base.datasource.api
 
 import androidx.annotation.VisibleForTesting
+import com.mackosoft.core.BuildConfig
 import com.mackosoft.network.okHttpClient
 import com.mackosoft.network.retrofit
-import io.mockk.BuildConfig
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.mackosoft.core.base.network
+package com.mackosoft.core.test.base.network
 
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestRule

@@ -1,4 +1,4 @@
-package com.mackosoft.core.base
+package com.mackosoft.core.test.base
 
 import androidx.annotation.CallSuper
 import io.mockk.clearAllMocks

@@ -1,8 +1,6 @@
-package com.mackosoft.core.base.network
+package com.mackosoft.core.test.base.network
 
-import com.mackosoft.core.base.BaseTests
-import io.mockk.unmockkAll
-import org.junit.AfterClass
+import com.mackosoft.core.test.base.BaseTests
 import org.junit.Rule
 
 abstract class BaseRemoteDataSourceTests : BaseTests() {

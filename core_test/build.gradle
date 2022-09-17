@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -35,19 +33,13 @@ android {
 }
 
 dependencies {
-    // Android X > DI
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    // Internal
+    implementation project(path: ':core')
 
-    // Android X > Kotlin
-    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.annotation:annotation:1.4.0"
 
-    // Network
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
-    // Network
-    implementation project(path: ':network')
+    implementation "junit:junit:$junit_version"
+    implementation "io.mockk:mockk-android:$mockk_version"
+    implementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

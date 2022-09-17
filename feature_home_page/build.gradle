@@ -63,4 +63,10 @@ dependencies {
     implementation project(path: ':network')
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Tests > Unit
+    testImplementation project(path: ':core_test')
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "io.mockk:mockk-android:$mockk_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

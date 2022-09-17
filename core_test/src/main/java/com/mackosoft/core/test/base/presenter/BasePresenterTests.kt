@@ -1,8 +1,10 @@
-package com.mackosoft.core.base.presenter
+package com.mackosoft.core.test.base.presenter
 
 import androidx.annotation.CallSuper
-import com.mackosoft.core.base.BaseTests
 import com.mackosoft.core.base.model.BaseModel
+import com.mackosoft.core.base.presenter.BaseCoroutinePresenter
+import com.mackosoft.core.test.base.BaseTests
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -12,7 +14,7 @@ import org.junit.After
 import org.junit.Before
 
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class BasePresenterTest<Model : BaseModel<*>, View, Presenter : BaseCoroutinePresenter> :
+abstract class BasePresenterTests<Model : BaseModel<*>, View, Presenter : BaseCoroutinePresenter<Model, View>> :
     BaseTests() {
 
     protected abstract val mockedModel: Model
