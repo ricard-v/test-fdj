@@ -1,0 +1,52 @@
+{
+  "leagues": [
+    {
+      "idLeague": "4328",
+      "strLeague": "English Premier League",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Premier League"
+    },
+    {
+      "idLeague": "4329",
+      "strLeague": "English League Championship",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Championship"
+    },
+    {
+      "idLeague": "4330",
+      "strLeague": "Scottish Premier League",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Scottish Premiership"
+    },
+    {
+      "idLeague": "4331",
+      "strLeague": "German Bundesliga",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Bundesliga, Fußball-Bundesliga"
+    },
+    {
+      "idLeague": "4332",
+      "strLeague": "Italian Serie A",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Serie A"
+    },
+    {
+      "idLeague": "4334",
+      "strLeague": "French Ligue 1",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "Ligue 1 Uber Eats"
+    },
+    {
+      "idLeague": "4335",
+      "strLeague": "Spanish La Liga",
+      "strSport": "Soccer",
+      "strLeagueAlternate": "La Liga Santander"
+    },
+    {
+      "idLeague": "4336",
+      "strLeague": "Greek Superleague Greece",
+      "strSport": "Soccer",
+      "strLeagueAlternate": ""
+    }
+  ]
+}
