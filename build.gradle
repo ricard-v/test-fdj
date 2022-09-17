@@ -18,11 +18,15 @@ project.ext {
 }
 
 ext {
+    constraint_layout_version = '2.1.4'
     core_ktx_version = '1.9.0'
     coroutines_version = '1.6.4'
+    fragment_ktx_version = '1.5.2'
+    glide_version = '4.13.2'
     junit_version = '4.13.2'
     hilt_version = '2.43.2'
     mockk_version = '1.12.8'
     okhttp_version = '4.10.0'
     retrofit_version = '2.9.0'
+    viewbinding_delegate_version = '1.5.6'
 }

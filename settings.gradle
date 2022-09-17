@@ -16,3 +16,5 @@ rootProject.name = "TestFDJ"
 include ':app'
 include ':core'
 include ':network'
+include ':feature_home_page'
+include ':core_test'

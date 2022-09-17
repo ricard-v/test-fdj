@@ -46,15 +46,12 @@ android {
 }
 
 dependencies {
+    // Internal features
+    implementation project(path: ':feature_home_page')
 
     // Android X > Views
     implementation "androidx.appcompat:appcompat:1.5.1"
     implementation "androidx.activity:activity-ktx:1.5.1"
-    implementation "androidx.fragment:fragment-ktx:1.5.2"
-
-    // Android X > Layouts
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     // Android X > DI
     implementation "com.google.dagger:hilt-android:$hilt_version"
