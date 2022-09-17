@@ -15,6 +15,7 @@ dependencyResolutionManagement {
 rootProject.name = "TestFDJ"
 include ':app'
 include ':core'
+include ':core_test'
 include ':network'
 include ':feature_home_page'
-include ':core_test'
+include ':feature_team_details'

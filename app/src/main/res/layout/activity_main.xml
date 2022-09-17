@@ -10,6 +10,6 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.mackosoft.feature.homepage.view.HomePageFragment"/>
+        android:name="com.mackosoft.features.homepage.view.HomePageFragment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
