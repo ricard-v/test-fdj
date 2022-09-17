@@ -257,6 +257,7 @@ class HomePageModelTests : BaseModelTests<HomePageRemoteDataSource, HomePageMode
             val expt = FootballTeamEntity(
                 id = footballTeamData.idTeam,
                 teamBadgeUrl = footballTeamData.strTeamBadge,
+                teamName = footballTeamData.strTeam,
             )
             if (got != expt) return false
         }

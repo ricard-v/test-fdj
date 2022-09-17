@@ -15,10 +15,12 @@ class FootballTeamItemViewHolder(
         } ?: run {
             clearImage()
         }
+        binding.root.contentDescription = footballTeamEntity.teamName
     }
 
     fun recycle() {
         clearImage()
+        binding.root.contentDescription = null
     }
 
     private fun clearImage() {

@@ -6,4 +6,5 @@
     android:background="?selectableItemBackgroundBorderless"
     android:scaleType="centerInside"
     tools:context=".view.adapter.FootballTeamItemViewHolder"
+    tools:ignore="ContentDescription"
     tools:src="@tools:sample/avatars" />

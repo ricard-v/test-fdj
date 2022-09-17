@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_view_hint_text">Search championship</string>
+    <string name="search_view_hint_text">Rechercher un championnat</string>
     <string name="no_search_results_for">Aucun résultat disponible pour \"%1$s\"</string>
 </resources>

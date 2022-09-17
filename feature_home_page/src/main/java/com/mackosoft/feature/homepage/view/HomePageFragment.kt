@@ -54,9 +54,10 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
             object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.home_page_fragment_menu, menu)
-                    (menu.findItem(R.id.app_bar_search).actionView as SearchView)?.let {
-                        searchView = it
-                        it.setOnQueryTextListener(
+                    (menu.findItem(R.id.app_bar_search).actionView as? SearchView)?.apply {
+                        searchView = this
+                        queryHint = getText(R.string.search_view_hint_text)
+                        setOnQueryTextListener(
                             object : SearchView.OnQueryTextListener {
                                 override fun onQueryTextSubmit(query: String?): Boolean = false
 
@@ -80,6 +81,11 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
             adapter = footballTeamsListAdapter
             addItemDecoration(FootballTeamsListDecoration(requireContext()))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchView = null
     }
 
     // region Contract

@@ -66,6 +66,7 @@ class HomePageModel @Inject constructor(
                             FootballTeamEntity(
                                 id = data.idTeam,
                                 teamBadgeUrl = data.strTeamBadge,
+                                teamName = data.strTeam,
                             )
                         }
                     }

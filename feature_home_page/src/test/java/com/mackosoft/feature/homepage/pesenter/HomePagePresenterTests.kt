@@ -30,9 +30,9 @@ class HomePagePresenterTests :
             // arrange
             val tSearchKey = "Ligue 1"
             val tTeams = listOf(
-                FootballTeamEntity(id = "1", teamBadgeUrl = "url/to/image1.png"),
-                FootballTeamEntity(id = "2", teamBadgeUrl = "url/to/image2.png"),
-                FootballTeamEntity(id = "3", teamBadgeUrl = "url/to/image3.png"),
+                FootballTeamEntity(id = "1", teamBadgeUrl = "url/to/image1.png", teamName = "team 1"),
+                FootballTeamEntity(id = "2", teamBadgeUrl = "url/to/image2.png", teamName = "team 2"),
+                FootballTeamEntity(id = "3", teamBadgeUrl = "url/to/image3.png", teamName = "team 3"),
             )
 
             coEvery {
