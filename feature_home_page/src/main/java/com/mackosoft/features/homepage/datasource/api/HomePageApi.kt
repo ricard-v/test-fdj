@@ -7,9 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface HomePageApi {
-    @GET("2/all_leagues.php")
+    @GET("all_leagues.php")
     suspend fun getFootballChampionships(): Response<FootballChampionsShips>
 
-    @GET("2/search_all_teams.php")
+    @GET("search_all_teams.php")
     suspend fun getChampionshipByName(@Query("l") name: String): Response<FootballTeams>
 }

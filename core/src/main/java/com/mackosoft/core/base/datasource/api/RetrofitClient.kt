@@ -11,7 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     // can't be const because of mock
     @VisibleForTesting
-    val apiBaseUrl = "https://www.thesportsdb.com/api/v1/json/"
+    val apiBaseUrl = "https://www.thesportsdb.com/api/v1/json/%s/"
+    private const val API_KEY = "50130162"
 
     val globalOkHttpClient by lazy {
         okHttpClient {
@@ -27,7 +28,7 @@ object RetrofitClient {
     }
 
     val instance: Retrofit by lazy {
-        retrofit(apiBaseUrl) {
+        retrofit(apiBaseUrl.format(API_KEY)) {
             okHttpClient = globalOkHttpClient
             converterFactories = listOf(
                 GsonConverterFactory.create()
