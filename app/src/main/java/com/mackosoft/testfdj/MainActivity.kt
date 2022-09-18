@@ -3,9 +3,12 @@ package com.mackosoft.testfdj
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.mackosoft.core.extensions.takeIfNotNull
 import com.mackosoft.features.homepage.view.HomePageFragment
+import com.mackosoft.features.teamdetails.view.TeamDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +26,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 lifecycleOwner = this
             ) { teamId: String?, teamName: String? ->
                 takeIfNotNull(teamId, teamName)?.let { (id, name) ->
-                    Toast.makeText(this, "show details for $name", Toast.LENGTH_LONG).show()
+                    findNavController(R.id.nav_host).navigate(
+                        R.id.show_team_details,
+                        bundleOf(
+                            TeamDetailsFragment.ARG_KEY_TEAM_ID to teamId,
+                            TeamDetailsFragment.ARG_KEY_TEAM_NAME to teamName,
+                        ),
+                    )
                 } ?: run {
                     Toast.makeText(
                         this,
