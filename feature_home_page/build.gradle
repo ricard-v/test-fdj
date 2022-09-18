@@ -57,8 +57,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    // Android X > Theming
-    implementation "com.google.android.material:material:1.6.1"
+    // Google > Theming
+    implementation "com.google.android.material:material:$material_version"
 
     // Android X > Kotlin
     implementation "androidx.core:core-ktx:$core_ktx_version"
