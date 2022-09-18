@@ -31,26 +31,10 @@ abstract class HomePageBindings {
 @Module
 @InstallIn(FragmentComponent::class)
 object HomePageModule {
-
-    @Provides
-    fun providesRetrofitClient(): RetrofitClient = RetrofitClient
-
     @Provides
     fun providesRemoteDataSource(retrofitClient: RetrofitClient): HomePageRemoteDataSource {
         return HomePageRemoteDataSource(retrofitClient)
     }
-
-    @DefaultDispatcher
-    @Provides
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
-
-    @IoDispatcher
-    @Provides
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @MainDispatcher
-    @Provides
-    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
     @Provides
     fun providesHomePageModel(

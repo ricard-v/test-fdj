@@ -43,7 +43,6 @@ class TeamDetailsModel @Inject constructor(
 
         return Result.success(
             FootballTeamDetailsEntity(
-                name = data.strTeam,
                 bannerUrl = data.strBanner,
                 country = data.strCountry,
                 championShipName = data.strLeague,
