@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.mackosoft.features.homepage.databinding.ItemViewFootballTeamBinding
 import com.mackosoft.features.homepage.model.entities.FootballTeamEntity
 
-class FootballTeamsListAdapter : ListAdapter<FootballTeamEntity, FootballTeamItemViewHolder>(
+class FootballTeamsListAdapter(
+    private val onItemClickedListener: (FootballTeamEntity) -> Unit,
+) : ListAdapter<FootballTeamEntity, FootballTeamItemViewHolder>(
     DiffCallback(),
 ) {
 
@@ -17,7 +19,10 @@ class FootballTeamsListAdapter : ListAdapter<FootballTeamEntity, FootballTeamIte
                 LayoutInflater.from(parent.context),
                 parent,
                 false,
-            )
+            ),
+            onItemClickedListener = { position ->
+                onItemClickedListener.invoke(getItem(position))
+            }
         )
     }
 

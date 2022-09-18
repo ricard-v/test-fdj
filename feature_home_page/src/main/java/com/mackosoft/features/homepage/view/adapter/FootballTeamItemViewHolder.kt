@@ -6,8 +6,17 @@ import com.mackosoft.features.homepage.databinding.ItemViewFootballTeamBinding
 import com.mackosoft.features.homepage.model.entities.FootballTeamEntity
 
 class FootballTeamItemViewHolder(
-    private val binding: ItemViewFootballTeamBinding
+    private val binding: ItemViewFootballTeamBinding,
+    onItemClickedListener: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        itemView.setOnClickListener {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                onItemClickedListener.invoke(bindingAdapterPosition)
+            }
+        }
+    }
 
     fun bindTeam(footballTeamEntity: FootballTeamEntity) {
         footballTeamEntity.teamBadgeUrl?.let { url ->

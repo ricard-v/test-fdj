@@ -47,6 +47,7 @@ android {
 
 dependencies {
     // Internal features
+    implementation project(path: ':core')
     implementation project(path: ':feature_home_page')
     implementation project(path: ':feature_team_details')
 

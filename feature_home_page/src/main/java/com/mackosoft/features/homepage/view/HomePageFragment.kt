@@ -7,9 +7,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.LifecycleOwner
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.mackosoft.core.base.presenter.BasePresenterFragment
 import com.mackosoft.features.homepage.HomePageContract
@@ -26,12 +30,37 @@ import javax.inject.Inject
 class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragment_home_page),
     HomePageContract.View {
 
+    companion object {
+        private const val FOOTBALL_TEAM_DETAILS_REQUEST_KEY = "football_team_details_request_key"
+        private const val RESULT_KEY_FOOTBALL_TEAMS_DETAILS_ID =
+            "result_arg_football_team_details_id"
+        private const val RESULT_KEY_FOOTBALL_TEAMS_DETAILS_NAME =
+            "result_arg_football_team_details_name"
+
+        fun setResultListener(
+            fragmentManager: FragmentManager,
+            lifecycleOwner: LifecycleOwner,
+            action: (teamId: String?, teamName: String?) ->Unit
+        ) {
+            fragmentManager.setFragmentResultListener(
+                FOOTBALL_TEAM_DETAILS_REQUEST_KEY,
+                lifecycleOwner
+            ) { _, bundle ->
+                val id = bundle.getString(RESULT_KEY_FOOTBALL_TEAMS_DETAILS_ID)
+                val name = bundle.getString(RESULT_KEY_FOOTBALL_TEAMS_DETAILS_NAME)
+                action.invoke(id, name)
+            }
+        }
+    }
+
     @Inject
     override lateinit var presenter: HomePagePresenter
     private val binding: FragmentHomePageBinding by viewBinding()
     private var searchView: SearchView? = null
 
-    private val footballTeamsListAdapter: FootballTeamsListAdapter = FootballTeamsListAdapter()
+    private val footballTeamsListAdapter: FootballTeamsListAdapter = FootballTeamsListAdapter(
+        onItemClickedListener = ::onFootballTeamItemClicked
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,6 +110,16 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
             adapter = footballTeamsListAdapter
             addItemDecoration(FootballTeamsListDecoration(requireContext()))
         }
+    }
+
+    private fun onFootballTeamItemClicked(footballTeamEntity: FootballTeamEntity) {
+        setFragmentResult(
+            requestKey = FOOTBALL_TEAM_DETAILS_REQUEST_KEY,
+            result = bundleOf(
+                RESULT_KEY_FOOTBALL_TEAMS_DETAILS_ID to footballTeamEntity.id,
+                RESULT_KEY_FOOTBALL_TEAMS_DETAILS_NAME to footballTeamEntity.teamName,
+            ),
+        )
     }
 
     override fun onDestroyView() {
