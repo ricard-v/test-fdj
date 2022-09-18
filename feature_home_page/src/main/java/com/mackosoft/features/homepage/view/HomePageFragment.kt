@@ -40,7 +40,7 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
         fun setResultListener(
             fragmentManager: FragmentManager,
             lifecycleOwner: LifecycleOwner,
-            action: (teamId: String?, teamName: String?) ->Unit
+            action: (teamId: String?, teamName: String?) -> Unit
         ) {
             fragmentManager.setFragmentResultListener(
                 FOOTBALL_TEAM_DETAILS_REQUEST_KEY,
@@ -56,7 +56,9 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
     @Inject
     override lateinit var presenter: HomePagePresenter
     private val binding: FragmentHomePageBinding by viewBinding()
+
     private var searchView: SearchView? = null
+    private var lastSearchKey: String? = null
 
     private val footballTeamsListAdapter: FootballTeamsListAdapter = FootballTeamsListAdapter(
         onItemClickedListener = ::onFootballTeamItemClicked
@@ -69,7 +71,7 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
 
     override fun onResume() {
         super.onResume()
-        searchView?.query?.toString()?.let(presenter::searchChampionship)
+        searchView?.query?.toString()?.let(::performSearch)
     }
 
     private fun setupUi() {
@@ -86,12 +88,17 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
                     (menu.findItem(R.id.app_bar_search).actionView as? SearchView)?.apply {
                         searchView = this
                         queryHint = getText(R.string.search_view_hint_text)
+                        lastSearchKey?.let { searchKey ->
+                            // restore search text & re-open search view
+                            setQuery(searchKey, false)
+                            isIconified = false
+                        }
                         setOnQueryTextListener(
                             object : SearchView.OnQueryTextListener {
                                 override fun onQueryTextSubmit(query: String?): Boolean = false
 
                                 override fun onQueryTextChange(newText: String?): Boolean {
-                                    newText?.let(presenter::searchChampionship)
+                                    newText?.let(::performSearch)
                                     return false
                                 }
                             }
@@ -110,6 +117,11 @@ class HomePageFragment : BasePresenterFragment<HomePagePresenter>(R.layout.fragm
             adapter = footballTeamsListAdapter
             addItemDecoration(FootballTeamsListDecoration(requireContext()))
         }
+    }
+
+    private fun performSearch(searchKey: String) {
+        lastSearchKey = searchKey
+        presenter.searchChampionship(searchKey)
     }
 
     private fun onFootballTeamItemClicked(footballTeamEntity: FootballTeamEntity) {

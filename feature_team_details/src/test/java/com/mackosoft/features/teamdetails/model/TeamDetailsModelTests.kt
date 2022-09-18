@@ -32,7 +32,8 @@ class TeamDetailsModelTests : BaseModelTests<TeamDetailsRemoteDataSource, TeamDe
                     strTeamBanner = "path/to/banner_1.png",
                     strCountry = "France",
                     strLeague = "French League 1",
-                    strDescriptionFR = "Description Équipe 1",
+                    strDescriptionFR = null,
+                    strDescriptionEN = "Description Équipe 1",
                 )
             )
         )
@@ -52,7 +53,9 @@ class TeamDetailsModelTests : BaseModelTests<TeamDetailsRemoteDataSource, TeamDe
         assert(data.bannerUrl == tTeams.teams.first().strTeamBanner)
         assert(data.country == tTeams.teams.first().strCountry)
         assert(data.championShipName == tTeams.teams.first().strLeague)
-        assert(data.description == tTeams.teams.first().strDescriptionFR)
+        assert(data.description == tTeams.teams.first().strDescriptionEN) {
+            "TeamDetailsModel should select a non-null description if any"
+        }
     }
 
     @Test

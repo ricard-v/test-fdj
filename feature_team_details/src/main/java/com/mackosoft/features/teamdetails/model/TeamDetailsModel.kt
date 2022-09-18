@@ -11,6 +11,7 @@ import com.mackosoft.features.teamdetails.datasource.TeamDetailsRemoteDataSource
 import com.mackosoft.features.teamdetails.model.entities.FootballTeamDetailsEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class TeamDetailsModel @Inject constructor(
@@ -46,8 +47,28 @@ class TeamDetailsModel @Inject constructor(
                 bannerUrl = data.strTeamBanner,
                 country = data.strCountry,
                 championShipName = data.strLeague,
-                description = data.strDescriptionFR,
+                description = data.selectBestDescription(),
             )
         )
+    }
+
+    private fun FootballTeamData.selectBestDescription(): String? {
+        return when {
+            strDescriptionFR != null -> strDescriptionFR
+            strDescriptionEN != null -> strDescriptionEN
+            strDescriptionDE != null -> strDescriptionDE
+            strDescriptionCN != null -> strDescriptionCN
+            strDescriptionIT != null -> strDescriptionIT
+            strDescriptionJP != null -> strDescriptionJP
+            strDescriptionRU != null -> strDescriptionRU
+            strDescriptionES != null -> strDescriptionES
+            strDescriptionPT != null -> strDescriptionPT
+            strDescriptionSE != null -> strDescriptionSE
+            strDescriptionNL != null -> strDescriptionNL
+            strDescriptionHU != null -> strDescriptionHU
+            strDescriptionNO != null -> strDescriptionNO
+            strDescriptionIL != null -> strDescriptionIL
+            else -> null
+        }
     }
 }
