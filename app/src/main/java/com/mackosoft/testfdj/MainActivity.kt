@@ -1,11 +1,14 @@
 package com.mackosoft.testfdj
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.mackosoft.core.extensions.takeIfNotNull
 import com.mackosoft.features.homepage.view.HomePageFragment
 import com.mackosoft.features.teamdetails.view.TeamDetailsFragment
@@ -19,7 +22,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupNavigation()
+    }
 
+    private fun setupNavigation() {
         navHostFragment?.childFragmentManager?.let { fragmentManager ->
             HomePageFragment.setResultListener(
                 fragmentManager = fragmentManager,
@@ -29,8 +35,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     findNavController(R.id.nav_host).navigate(
                         R.id.show_team_details,
                         bundleOf(
-                            TeamDetailsFragment.ARG_KEY_TEAM_ID to teamId,
-                            TeamDetailsFragment.ARG_KEY_TEAM_NAME to teamName,
+                            TeamDetailsFragment.ARG_KEY_TEAM_ID to id,
+                            TeamDetailsFragment.ARG_KEY_TEAM_NAME to name,
                         ),
                     )
                 } ?: run {
@@ -42,5 +48,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
         }
+
+        navHostFragment?.navController?.let { navController ->
+            setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
+        }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
+        }
+        return true
+    }
+
 }
