@@ -48,6 +48,7 @@ android {
 dependencies {
     // Internal features
     implementation project(path: ':feature_home_page')
+    implementation project(path: ':feature_team_details')
 
     // Android X > Views
     implementation "androidx.appcompat:appcompat:1.5.1"

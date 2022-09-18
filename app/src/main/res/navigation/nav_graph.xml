@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.mackosoft.features.homepage.view.HomePageFragment"
-        android:label="HomePageFragment" />
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_teamDetailsFragment"
+            app:destination="@id/teamDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamDetailsFragment"
+        android:name="com.mackosoft.features.teamdetails.view.TeamDetailsFragment"
+        android:label="TeamDetailsFragment" />
 </navigation>
