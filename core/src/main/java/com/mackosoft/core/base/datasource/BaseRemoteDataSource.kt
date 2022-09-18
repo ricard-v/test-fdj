@@ -1,6 +1,7 @@
 package com.mackosoft.core.base.datasource
 
 import android.util.Log
+import com.google.gson.JsonSyntaxException
 import com.mackosoft.core.base.datasource.api.RetrofitClient
 import com.mackosoft.core.base.network.NullResponseBody
 import com.mackosoft.core.base.network.UnsuccessfulApiCall
@@ -37,9 +38,9 @@ open class BaseRemoteDataSource(private val retrofitClient: RetrofitClient) {
                     )
                 )
             }
-        } catch (ioe: IOException) {
-            Log.e(TAG, "Failed to perform <$apiCallName>: ${ioe.message}", ioe)
-            Result.failure(ioe)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to perform <$apiCallName>: ${e.message}", e)
+            Result.failure(e)
         }
 
         return result
