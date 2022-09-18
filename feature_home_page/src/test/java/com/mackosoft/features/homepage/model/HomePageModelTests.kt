@@ -189,7 +189,6 @@ class HomePageModelTests : BaseModelTests<HomePageRemoteDataSource, HomePageMode
             }
         }
 
-
     @Test
     fun `When HomePageRemoteDataSource failed to return all championships`() = testScope.runTest {
         // arrange
