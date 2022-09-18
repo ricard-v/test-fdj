@@ -29,7 +29,7 @@ class TeamDetailsModelTests : BaseModelTests<TeamDetailsRemoteDataSource, TeamDe
             teams = listOf(
                 FootballTeamData(
                     idTeam = tTeamId,
-                    strBanner = "path/to/banner_1.png",
+                    strTeamBanner = "path/to/banner_1.png",
                     strCountry = "France",
                     strLeague = "French League 1",
                     strDescriptionFR = "Description Équipe 1",
@@ -49,7 +49,7 @@ class TeamDetailsModelTests : BaseModelTests<TeamDetailsRemoteDataSource, TeamDe
         // assert
         assert(result.isSuccess)
         val data = result.getOrNull()!!
-        assert(data.bannerUrl == tTeams.teams.first().strBanner)
+        assert(data.bannerUrl == tTeams.teams.first().strTeamBanner)
         assert(data.country == tTeams.teams.first().strCountry)
         assert(data.championShipName == tTeams.teams.first().strLeague)
         assert(data.description == tTeams.teams.first().strDescriptionFR)

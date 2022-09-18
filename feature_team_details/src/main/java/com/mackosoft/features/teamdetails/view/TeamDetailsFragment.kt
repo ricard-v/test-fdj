@@ -94,6 +94,8 @@ class TeamDetailsFragment :
     override fun showTeamDetails(teamDetailsEntity: FootballTeamDetailsEntity) {
         teamDetailsEntity.bannerUrl?.let { url ->
             GlideApp.with(binding.banner).load(url).into(binding.banner)
+        } ?: run {
+            binding.banner.isVisible = false
         }
         binding.country.text = teamDetailsEntity.country
         binding.championship.text = teamDetailsEntity.championShipName
