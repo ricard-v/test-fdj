@@ -5,21 +5,31 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.mackosoft.core.base.presenter.BasePresenterFragment
 import com.mackosoft.features.teamdetails.R
+import com.mackosoft.features.teamdetails.TeamDetailsContract
 import com.mackosoft.features.teamdetails.databinding.FragmentTeamDetailsBinding
+import com.mackosoft.features.teamdetails.model.entities.FootballTeamDetailsEntity
+import com.mackosoft.features.teamdetails.presenter.TeamDetailsPresenter
+import javax.inject.Inject
 
-class TeamDetailsFragment : Fragment(R.layout.fragment_team_details) {
+class TeamDetailsFragment :
+    BasePresenterFragment<TeamDetailsPresenter>(R.layout.fragment_team_details),
+    TeamDetailsContract.View {
 
     companion object {
         const val ARG_KEY_TEAM_ID = "arg_key_team_id"
         const val ARG_KEY_TEAM_NAME = "arg_key_team_name"
     }
 
+    @Inject
+    override lateinit var presenter: TeamDetailsPresenter
     private val binding: FragmentTeamDetailsBinding by viewBinding()
 
     private val teamId: String?
@@ -30,6 +40,18 @@ class TeamDetailsFragment : Fragment(R.layout.fragment_team_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        teamId?.let(presenter::getFootballTeamDetails) ?: run {
+            Toast.makeText(
+                requireContext(),
+                R.string.missing_team_id_in_arguments,
+                Toast.LENGTH_LONG,
+            ).show()
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupUi() {
@@ -53,4 +75,18 @@ class TeamDetailsFragment : Fragment(R.layout.fragment_team_details) {
     private fun updateBarTitle() {
         (requireActivity() as AppCompatActivity).supportActionBar?.title = teamName
     }
+
+    // region Contract
+    override fun showLoading(isLoading: Boolean) {
+
+    }
+
+    override fun showTeamDetails(teamDetailsEntity: FootballTeamDetailsEntity) {
+
+    }
+
+    override fun showErrorMessage(errorMessage: String) {
+
+    }
+    // endregion Contract
 }

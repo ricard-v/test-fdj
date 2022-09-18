@@ -4,8 +4,8 @@ import com.mackosoft.core.test.base.model.BaseModelTests
 import com.mackosoft.features.homepage.datasource.HomePageRemoteDataSource
 import com.mackosoft.features.homepage.datasource.data.FootballChampionsShips
 import com.mackosoft.features.homepage.datasource.data.FootballChampionshipData
-import com.mackosoft.features.homepage.datasource.data.FootballTeamData
-import com.mackosoft.features.homepage.datasource.data.FootballTeams
+import com.mackosoft.core.data.FootballTeamData
+import com.mackosoft.core.data.FootballTeams
 import com.mackosoft.features.homepage.model.entities.FootballTeamEntity
 import io.mockk.coEvery
 import io.mockk.coVerify

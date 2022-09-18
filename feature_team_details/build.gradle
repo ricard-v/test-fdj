@@ -56,6 +56,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    // Android x > Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+
     // Google > Theming
     implementation "com.google.android.material:material:$material_version"
 

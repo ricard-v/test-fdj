@@ -4,7 +4,7 @@ import com.mackosoft.core.base.datasource.api.RetrofitClient
 import com.mackosoft.core.base.datasource.BaseRemoteDataSource
 import com.mackosoft.features.homepage.datasource.api.HomePageApi
 import com.mackosoft.features.homepage.datasource.data.FootballChampionsShips
-import com.mackosoft.features.homepage.datasource.data.FootballTeams
+import com.mackosoft.core.data.FootballTeams
 import javax.inject.Inject
 
 class HomePageRemoteDataSource @Inject constructor(

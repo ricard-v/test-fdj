@@ -8,7 +8,7 @@ import com.mackosoft.features.homepage.HomePageContract
 import com.mackosoft.features.homepage.datasource.HomePageRemoteDataSource
 import com.mackosoft.features.homepage.datasource.data.FootballChampionsShips
 import com.mackosoft.features.homepage.datasource.data.FootballChampionshipData
-import com.mackosoft.features.homepage.datasource.data.FootballTeams
+import com.mackosoft.core.data.FootballTeams
 import com.mackosoft.features.homepage.model.entities.FootballTeamEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
